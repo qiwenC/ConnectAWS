@@ -1,2 +1,2 @@
 # ConnectAWS
-Using Pycom devices to publish message to AWS IoT
+Publish message to AWS IoT from Pycom devices
