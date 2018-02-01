@@ -1,5 +1,6 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from network import WLAN
+import json
 import time
 import config
 
@@ -40,6 +41,12 @@ time.sleep(2)
 # Send message to host
 loopCount = 0
 while loopCount < 8:
-	pycomAwsMQTTClient.publish(config.TOPIC, "New Message " + str(loopCount), 1)
-	loopCount += 1
-	time.sleep(5.0)
+    message = {}
+    message['message'] = "New Message" + str(loopCount)
+    message['sequence'] = loopCount
+    message['deviceType'] = "LoPy"
+    messageJson = json.dumps(message)
+    pycomAwsMQTTClient.publish(config.TOPIC, messageJson, 1)
+    #pycomAwsMQTTClient.publish(config.TOPIC, "New Message " + str(loopCount), 1)
+    loopCount += 1
+    time.sleep(5.0)
