@@ -1,5 +1,6 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from network import WLAN
+import binascii
 import json
 import machine
 import time
@@ -7,8 +8,6 @@ import utime
 import config
 import gc
 from machine import RTC
-
-
 
 # Connect to wifi
 wlan = WLAN(mode=WLAN.STA)
@@ -25,6 +24,9 @@ rtc = machine.RTC()
 rtc.ntp_sync("pool.ntp.org")
 utime.sleep_ms(750)
 print(rtc.now())
+
+#get MAC address as the device ID
+deviceID = binascii.hexlify(wlan.mac())
 
 # user specified callback function
 def customCallback(client, userdata, message):
@@ -58,8 +60,9 @@ time.sleep(2)
 loopCount = 0
 while loopCount < 8:
     message = {}
-    message['deviceID'] = "WiPy0001"
-    message['timestamp'] = utime.time()
+    message['deviceID'] = deviceID
+    timestamp = utime.localtime()
+    message['timestamp'] = "%d/%d/%d %d:%d:%d"%(timestamp[2],timestamp[1],timestamp[0],timestamp[3],timestamp[4],timestamp[5])
     message['message'] = "New Message" + str(loopCount)
     message['sequence'] = loopCount
     messageJson = json.dumps(message)
