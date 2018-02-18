@@ -9,11 +9,11 @@ Publish message to AWS IoT from Pycom devices
 
 ## Getting start with AWS IoT
 
-- Create an AWS account and login to the consle
+- Create an AWS account and login to the console
 - Services > AWS IoT
 
 ### Create a policy
-- In the left navigation pane, choose Secure > Policies
+- In the left navigation panel, choose Secure > Policies
 - Click on the 'Create' button
 - Name the policy. 
 
@@ -22,7 +22,7 @@ In the action part, choose"iot:Publish, iot:Subscribe, iot:Connect, iot:Receive"
 
 ### Register a device(Thing)
 
-- In the left navigation pane, choose Manage > Things.
+- In the left navigation panel, choose Manage > Things.
 - Click on the 'Create' button
 - Click on the'Create a single thing' button
 - Name your thing, click on the 'Next' button
