@@ -60,3 +60,12 @@ In the action part, choose"iot:Publish, iot:Subscribe, iot:Connect, iot:Receive"
 - Click on the 'connect' button
 
 Drag the file you need in our out to upload/download a file/folder.
+
+## Troubleshooting
+
+-  Error: "MemoryError: memory allocation failed, allocating 2048 bytes"
+
+   Solution: Upgarde your firmware, reboot the device
+   
+
+
