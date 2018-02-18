@@ -12,6 +12,7 @@ AWS_PRIVATE_KEY = '/flash/cert/ef37e84425.private.key'
 ################## Subscribe / Publish client #################
 CLIENT_ID = 'PycomPublishClient'
 TOPIC = 'myTestTopic'
+#DEVICE_TOPIC = 'myTestTopic/deviceID'
 OFFLINE_QUEUE_SIZE = -1
 DRAINING_FREQ = 2
 CONN_DISCONN_TIMEOUT = 10

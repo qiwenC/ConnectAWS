@@ -1,8 +1,14 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from network import WLAN
 import json
+import machine
 import time
+import utime
 import config
+import gc
+from machine import RTC
+
+
 
 # Connect to wifi
 wlan = WLAN(mode=WLAN.STA)
@@ -11,6 +17,15 @@ while not wlan.isconnected():
     time.sleep(0.5)
 print('WLAN connection succeeded!')
 
+time.sleep(2)
+gc.enable
+
+# setup rtc
+rtc = machine.RTC()
+rtc.ntp_sync("pool.ntp.org")
+utime.sleep_ms(750)
+print(rtc.now())
+
 # user specified callback function
 def customCallback(client, userdata, message):
 	print("Received a new message: ")
@@ -18,6 +33,7 @@ def customCallback(client, userdata, message):
 	print("from topic: ")
 	print(message.topic)
 	print("--------------\n\n")
+
 
 # configure the MQTT client
 pycomAwsMQTTClient = AWSIoTMQTTClient(config.CLIENT_ID)
@@ -42,11 +58,14 @@ time.sleep(2)
 loopCount = 0
 while loopCount < 8:
     message = {}
+    message['deviceID'] = "WiPy0001"
+    message['timestamp'] = utime.time()
     message['message'] = "New Message" + str(loopCount)
     message['sequence'] = loopCount
-    message['deviceType'] = "LoPy"
     messageJson = json.dumps(message)
+    #deviceJson = json.dumps(deviceID)
     pycomAwsMQTTClient.publish(config.TOPIC, messageJson, 1)
+    #pycomAwsMQTTClient.publish(config.DEVICE_TOPIC,deviceJson,1)
     #pycomAwsMQTTClient.publish(config.TOPIC, "New Message " + str(loopCount), 1)
     loopCount += 1
     time.sleep(5.0)
