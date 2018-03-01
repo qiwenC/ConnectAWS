@@ -1,5 +1,9 @@
 from AWSIoTPythonSDK.MQTTLib import AWSIoTMQTTClient
 from network import WLAN
+from pytrack import Pytrack
+from L76GNSS import L76GNSS
+#from pysense import Pysense
+#from SI7006A20 import SI7006A20
 import binascii
 import json
 import machine
@@ -25,8 +29,15 @@ rtc.ntp_sync("pool.ntp.org")
 utime.sleep_ms(750)
 print(rtc.now())
 
-#get MAC address as the device ID
+# get MAC address as the device ID
 deviceID = binascii.hexlify(wlan.mac())
+
+# configure pysense
+#py = Pysense()
+#si = SI7006A20(py)
+py = Pytrack()
+l76 = L76GNSS(py, timeout=30)
+
 
 # user specified callback function
 def customCallback(client, userdata, message):
@@ -59,12 +70,16 @@ time.sleep(2)
 # Send message to host
 loopCount = 0
 while loopCount < 8:
+    coord = l76.coordinates()
     message = {}
     message['deviceID'] = deviceID
     timestamp = utime.localtime()
     message['timestamp'] = "%d/%d/%d %d:%d:%d"%(timestamp[2],timestamp[1],timestamp[0],timestamp[3],timestamp[4],timestamp[5])
-    message['message'] = "New Message" + str(loopCount)
-    message['sequence'] = loopCount
+    message['gps'] = coord
+    #message['temp'] = si.temperature()
+    #message['humid'] = si.humidity()
+    #message['message'] = "New Message" + str(loopCount)
+    #message['sequence'] = loopCount
     messageJson = json.dumps(message)
     #deviceJson = json.dumps(deviceID)
     pycomAwsMQTTClient.publish(config.TOPIC, messageJson, 1)
