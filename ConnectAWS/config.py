@@ -1,16 +1,16 @@
 
 # wifi configuration
-WIFI_SSID = 'Croyance'
-WIFI_PASS = 'Freya270'
+WIFI_SSID = 'YOUR_WIFI'
+WIFI_PASS = 'YOUR_WIFI_PASSWORD'
 
 # AWS general configuration
 AWS_PORT = 8883
-AWS_HOST = 'ap71nzxvi4ixf.iot.eu-west-2.amazonaws.com'
+AWS_HOST = 'YOUR_AWS_HOST_ADDRESS'
 AWS_ROOT_CA = '/flash/cert/root-CA.crt'
-AWS_CLIENT_CERT = '/flash/cert/ef37e84425.cert.pem'
-AWS_PRIVATE_KEY = '/flash/cert/ef37e84425.private.key'
+AWS_CLIENT_CERT = '/flash/cert/xxxx.cert.pem'
+AWS_PRIVATE_KEY = '/flash/cert/xxxx.private.key'
 ################## Subscribe / Publish client #################
-CLIENT_ID = 'PycomPublishClient'
+#CLIENT_ID = 'PycomPublishClient'#?
 TOPIC = 'myTestTopic'
 #DEVICE_TOPIC = 'myTestTopic/deviceID'
 OFFLINE_QUEUE_SIZE = -1
